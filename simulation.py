@@ -10,8 +10,8 @@ from plot import *
 
 yf.pdr_override() 
 now = dt.datetime.now()
-start = now - dt.timedelta(hours=40)
-now = now - dt.timedelta(hours=20)
+start = now - dt.timedelta(hours=69)
+now = now - dt.timedelta(hours=44)
 
 
 stock='OIL'
@@ -20,22 +20,18 @@ stock = stock + '.NS'
 
 
 df = pdr.get_data_yahoo(stock, start, now,interval="1m")
-close = df['Close']
 time = []
-dateTime = df.index.tolist()
-for i in dateTime:
-    timetemp =  i.strftime("%H:%M")
-    time.append(timetemp)
 
 
 
-plt.plot(time,close)
-plt.scatter(maximaX,maximaY,color="green")
-plt.scatter(minimaX,minimaY,color="red")
+
+# plt.plot(time,close)
+
 # plt.show()
 
-plot(time,close,df)
+plot(df)
 
 
 
 
+# Sell/Buy when other peak appears without waiting for stoploss
