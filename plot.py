@@ -1,7 +1,7 @@
 import imp
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
-from Peaks import *
+from Strategy import *
 from User import *
 
 
@@ -37,7 +37,7 @@ def plot(df):
                     maximaX.append(time[ind])
                 plt.scatter(minimaX,minimaY,color="red")
                 plt.scatter(maximaX,maximaY,color="green")
-                user.checkTargetAndStoploss(close[i],time[i])
+                # user.checkTargetAndStoploss(close[i],time[i])
                 if(indices[2]=="MAXIMA"):
                     user.shortSell(close[i],time[i])
                 elif(indices[2]=="MINIMA"):
