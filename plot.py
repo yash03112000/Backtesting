@@ -1,4 +1,3 @@
-import imp
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 from Strategy import *

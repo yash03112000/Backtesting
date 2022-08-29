@@ -70,7 +70,7 @@ class Window1:
 		self.root.mainloop()
 
 	def getValues(self):
-		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get()
+		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get(), self.timeFrame.get()
 
 
 

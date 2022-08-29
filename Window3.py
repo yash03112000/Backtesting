@@ -32,7 +32,7 @@ class Window3:
 			'operator':'',
 			'value':0
 		}
-		self.entryConditions = []
+		self.exitConditions = []
 
 
 		self.operandDrop = tk.OptionMenu(self.root,self.operand,*self.operandList)
@@ -66,13 +66,13 @@ class Window3:
 		self.root.mainloop()
 
 	def getValues(self):
-		return self.entryConditions
+		return self.exitConditions
 
 	def addEntryCondition(self):
 		self.condition['operand'] = self.operand.get()
 		self.condition['operator'] = self.operatorVar.get()
 		self.condition['value'] = self.value.get()
-		self.entryConditions.append(self.condition)
+		self.exitConditions.append(self.condition)
 		a = tk.Label(self.root,text = self.condition['operand'], font = ('calibre',10,'bold'))
 		b = tk.Label(self.root,text = self.condition['operator'], font = ('calibre',10,'bold'))
 		c = tk.Label(self.root,text = self.condition['value'], font = ('calibre',10,'bold'))
