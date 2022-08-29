@@ -72,7 +72,7 @@ class Window2:
 		self.condition['operand'] = self.operand.get()
 		self.condition['operator'] = self.operatorVar.get()
 		self.condition['value'] = self.value.get()
-		self.entryConditions.append(self.condition)
+		self.entryConditions.append(self.condition.copy())
 		a = tk.Label(self.root,text = self.condition['operand'], font = ('calibre',10,'bold'))
 		b = tk.Label(self.root,text = self.condition['operator'], font = ('calibre',10,'bold'))
 		c = tk.Label(self.root,text = self.condition['value'], font = ('calibre',10,'bold'))
