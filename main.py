@@ -29,7 +29,6 @@ strategy.execute()
 
 
 
-# plot(df)
 
 
 
