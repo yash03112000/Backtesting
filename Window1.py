@@ -23,6 +23,8 @@ class Window1:
 		self.timeFrameList = [i for i in excel['TimeFrame'] if str(i)!='nan']
 		self.chartList = [i for i in excel['Chart'] if str(i)!='nan']
 		self.tradetypeList = [i for i in excel['Tradetype'] if str(i)!='nan']
+		self.productList = [i for i in excel['Product'] if str(i)!='nan']
+
 
 
 		self.strategyName=tk.StringVar()
@@ -39,11 +41,15 @@ class Window1:
 		self.volume.set(1)
 		self.tradetype = tk.StringVar()
 		self.tradetype.set(self.tradetypeList[0])
+		self.product = tk.StringVar()
+		self.product.set(self.productList[0])
 
 		self.instrumentDrop = tk.OptionMenu( self.root , self.instrument , *self.instrumentList )
 		self.timeFrameDrop = tk.OptionMenu( self.root , self.timeFrame , *self.timeFrameList )
 		self.chartDrop = tk.OptionMenu( self.root , self.chart , *self.chartList )
 		self.tradetypeDrop = tk.OptionMenu( self.root , self.tradetype , *self.tradetypeList )
+		self.productDrop = tk.OptionMenu( self.root , self.product , *self.productList )
+
 
 
 		self.strategyEntry = tk.Entry(self.root,textvariable = self.strategyName, font=('calibre',10,'normal'))
@@ -57,6 +63,8 @@ class Window1:
 		self.chartLabel = tk.Label(self.root,text = 'Chart', font = ('calibre',10,'bold'))
 		self.volumeLabel = tk.Label(self.root,text = 'Volume', font = ('calibre',10,'bold'))
 		self.tradetypeLabel = tk.Label(self.root,text = 'Trade Type', font = ('calibre',10,'bold'))
+		self.productLabel = tk.Label(self.root,text = 'Product', font = ('calibre',10,'bold'))
+
 
 
 		self.submitBtn = tk.Button(self.root,text = 'Submit', command = self.submit)
@@ -76,7 +84,9 @@ class Window1:
 		self.volumeEntry.grid(row=5,column=1)
 		self.tradetypeLabel.grid(row=6,column=0)
 		self.tradetypeDrop.grid(row=6,column=1)
-		self.submitBtn.grid(row=7,column=1)
+		self.productLabel.grid(row=7,column=0)
+		self.productDrop.grid(row=7,column=1)
+		self.submitBtn.grid(row=8,column=1)
 
 
 
@@ -86,7 +96,7 @@ class Window1:
 		self.root.mainloop()
 
 	def getValues(self):
-		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get(), self.timeFrame.get(), self.volume.get(), self.tradetype.get()
+		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get(), self.timeFrame.get(), self.volume.get(), self.tradetype.get(), self.product.get()
 
 
 

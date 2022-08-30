@@ -22,9 +22,16 @@ class Orderbook:
     def exitProcedure(self,price,time):
         if(self.activeTransactions!=None):
             self.exit(price,time)
+            self.activeTransactions = None
         print("Final P/L:", self.netPL)
-        # exit()
-        
+
+    def intradayExit(self,price,time):
+        if(self.activeTransactions!=None):
+            self.exit(price,time)
+            self.activeTransactions = None
+
+    
+
     def exit(self,price,time):
         transaction = self.activeTransactions
         self.activeTransactions = None
@@ -36,5 +43,5 @@ class Orderbook:
         self.transactions = pd.concat([self.transactions,df])
         print(self.transactions)
         filePath = r"./Spreadsheats/result.xlsx"
-        self.transactions.to_excel(filePath)
+        # self.transactions.to_excel(filePath)
 
