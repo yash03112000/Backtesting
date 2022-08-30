@@ -1,4 +1,5 @@
 import tkinter as tk
+from turtle import st
 import pandas as pd
 
 
@@ -21,6 +22,7 @@ class Window1:
 		self.instrumentList = [i for i in excel['Stock'] if str(i)!='nan']
 		self.timeFrameList = [i for i in excel['TimeFrame'] if str(i)!='nan']
 		self.chartList = [i for i in excel['Chart'] if str(i)!='nan']
+		self.tradetypeList = [i for i in excel['Tradetype'] if str(i)!='nan']
 
 
 		self.strategyName=tk.StringVar()
@@ -33,18 +35,29 @@ class Window1:
 		self.days.set(1)
 		self.chart = tk.StringVar()
 		self.chart.set(self.chartList[0])
-
+		self.volume = tk.IntVar()
+		self.volume.set(1)
+		self.tradetype = tk.StringVar()
+		self.tradetype.set(self.tradetypeList[0])
 
 		self.instrumentDrop = tk.OptionMenu( self.root , self.instrument , *self.instrumentList )
 		self.timeFrameDrop = tk.OptionMenu( self.root , self.timeFrame , *self.timeFrameList )
 		self.chartDrop = tk.OptionMenu( self.root , self.chart , *self.chartList )
+		self.tradetypeDrop = tk.OptionMenu( self.root , self.tradetype , *self.tradetypeList )
+
+
 		self.strategyEntry = tk.Entry(self.root,textvariable = self.strategyName, font=('calibre',10,'normal'))
 		self.daysEntry = tk.Entry(self.root,textvariable = self.days, font=('calibre',10,'normal'))
+		self.volumeEntry = tk.Entry(self.root,textvariable = self.volume, font=('calibre',10,'normal'))
+
 		self.strategyLabel = tk.Label(self.root, text = 'Strategy Name', font=('calibre',10, 'bold'))
 		self.instrumentLabel = tk.Label(self.root, text = 'Instrument', font = ('calibre',10,'bold'))
 		self.timeFrameLabel = tk.Label(self.root, text = 'TimeFrame', font = ('calibre',10,'bold'))
 		self.daysLabel = tk.Label(self.root, text = 'Select Days', font = ('calibre',10,'bold'))
 		self.chartLabel = tk.Label(self.root,text = 'Chart', font = ('calibre',10,'bold'))
+		self.volumeLabel = tk.Label(self.root,text = 'Volume', font = ('calibre',10,'bold'))
+		self.tradetypeLabel = tk.Label(self.root,text = 'Trade Type', font = ('calibre',10,'bold'))
+
 
 		self.submitBtn = tk.Button(self.root,text = 'Submit', command = self.submit)
 
@@ -59,8 +72,11 @@ class Window1:
 		self.chartDrop.grid(row=3,column=1)
 		self.daysLabel.grid(row=4,column=0)
 		self.daysEntry.grid(row=4,column=1)
-		self.rowIndex = 5
-		self.submitBtn.grid(row=self.rowIndex+3,column=1)
+		self.volumeLabel.grid(row=5,column=0)
+		self.volumeEntry.grid(row=5,column=1)
+		self.tradetypeLabel.grid(row=6,column=0)
+		self.tradetypeDrop.grid(row=6,column=1)
+		self.submitBtn.grid(row=7,column=1)
 
 
 
@@ -70,7 +86,7 @@ class Window1:
 		self.root.mainloop()
 
 	def getValues(self):
-		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get(), self.timeFrame.get()
+		return self.strategyName.get(), self.chart.get(), self.days.get(), self.instrument.get(), self.timeFrame.get(), self.volume.get(), self.tradetype.get()
 
 
 

@@ -4,7 +4,7 @@ import datetime as dt
 import pandas as pd
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
-from User import *
+from Orderbook import *
 from Indicators import Indicators as ind
 class Strategy:
 
@@ -18,9 +18,11 @@ class Strategy:
         self.days = v1[2]
         self.instrument = v1[3]
         self.timeframe = v1[4]
+        self.volume = v1[5]
+        self.tradetype = v1[6]
         self.entryConditions = v2
         self.exitConditions = v3
-        self.status = "BUY"
+        self.status = "ENTRY"
     
     def execute(self):
         now = dt.datetime.now()
@@ -34,10 +36,10 @@ class Strategy:
         for i in dateTime:
             timetemp =  i.strftime("%H:%M")
             self.time.append(timetemp)    
-        self.user = User()
         fig = plt.figure()
         self.ax1 = fig.add_subplot(1,1,1)
         ani = animation.FuncAnimation(fig, self.animate, interval=0)
+        self.orderbook = Orderbook(self.volume,self.tradetype)
         plt.show()
 
     def animate(self,i):
@@ -47,9 +49,8 @@ class Strategy:
             self.xar = self.time[0:i+1]
             self.yar = self.df[0:i+1]
         elif(i==size):
-            # self.user.exitProcedure(self.close[-1],self.time[i])
-            pass
-        
+            self.orderbook.exitProcedure(self.df['Close'][-1],self.time[-1])
+            self.status = "ENTRY"
         if(i<=size-1):
             self.ax1.clear()
             self.ax1.plot(self.xar,self.yar['Close'])
@@ -58,22 +59,23 @@ class Strategy:
                 if n % every_nth != 0:
                     label.set_visible(False)
             if(i>0):
-                if(self.status=="BUY"):
+                if(self.status=="ENTRY"):
                     if(self.evaluate(self.entryConditions)):
                         self.entryX.append(self.xar[-1])
                         self.entryY.append(self.yar['Close'][-1])
-                        # user.shortSell(close[i],time[i])
+                        self.orderbook.entry(self.yar['Close'][-1],self.xar[-1])
                         print("BUY")
-                        self.status = "SELL"
+                        self.status = "EXIT"
                         print(self.entryX)
+                        self.orderbook.entry(self.entryY[-1],self.entryX[-1])
                 else:
                     if(self.evaluate(self.exitConditions)):                    
-                        # user.buy(close[i],time[i])
                         self.exitX.append(self.xar[-1])
                         self.exitY.append(self.yar['Close'][-1])
                         print("SELL")
-                        self.status = "BUY"
+                        self.status = "ENTRY"
                         print(self.exitX)
+                        self.orderbook.exit(self.yar['Close'][-1],self.xar[-1])
                 plt.scatter(self.exitX,self.exitY,color="red")
                 plt.scatter(self.entryX,self.entryY,color="green")
                 # # user.checkTargetAndStoploss(close[i],time[i])    
