@@ -1,4 +1,6 @@
 import talib as ta
+
+
 class Indicators:
     @staticmethod
     def RSIUtil(close):

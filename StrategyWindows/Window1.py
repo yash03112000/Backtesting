@@ -1,5 +1,4 @@
 import tkinter as tk
-from turtle import st
 import pandas as pd
 
 

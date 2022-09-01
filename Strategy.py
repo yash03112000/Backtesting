@@ -6,8 +6,8 @@ import pandas as pd
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 from Orderbook import *
-from Indicators import Indicators as ind
-from matplotlib.widgets import Slider
+from Utils.ConditionChecker import ConditionChecker as cnd
+
 class Strategy:
 
     entryY = []
@@ -73,7 +73,7 @@ class Strategy:
                 if n % every_nth != 0:
                     label.set_visible(False)
             if(self.status=="ENTRY"):
-                if(self.evaluate(self.entryConditions)):
+                if(cnd.evaluate(self.yar,self.entryConditions)):
                     self.entryX.append(self.xar[-1])
                     self.entryY.append(self.yar['Close'][-1])
                     self.orderbook.entry(self.yar['Close'][-1],self.xar[-1])
@@ -82,7 +82,7 @@ class Strategy:
                     # print(self.entryX)
                     self.orderbook.entry(self.entryY[-1],self.entryX[-1])
             else:
-                if(self.evaluate(self.exitConditions)):                    
+                if(cnd.evaluate(self.yar,self.exitConditions)):                    
                     self.exitX.append(self.xar[-1])
                     self.exitY.append(self.yar['Close'][-1])
                     print("SELL")
@@ -91,64 +91,7 @@ class Strategy:
                     self.orderbook.exit(self.yar['Close'][-1],self.xar[-1])
             plt.scatter(self.exitX,self.exitY,color="red")
             plt.scatter(self.entryX,self.entryY,color="green")
-            # # user.checkTargetAndStoploss(close[i],time[i])    
 
-    def evaluate(self,conditions):
-        result = []
-        for i in conditions:
-            operand1 = 0
-            operand2 = i['value']
-            operand = i['operand']
-            operatorVar = i['operator']
-            if(operand=='Close'):
-                operand1 = self.yar['Close'][-1]
-            elif(operand=='RSI'):
-                operand1 = ind.RSIUtil(self.yar['Close'])
-            elif(operand=='ADX'):
-                operand1 = ind.ADXUtil(self.yar['High'],self.yar['Low'],self.yar['Close'])
-            if(str(operand1)=='nan'):
-                result.append(False)
-                continue
-            # print(operand1)
-            result.append(self.evalOperator(operand1,operand2,operatorVar))
-        # print(result)
-        count  = 0
-        for i in result:
-            if(i==False):
-                count+=1
-        # print(count)
-        if(len(result)>0 and count==0):
-            return True
-        else:
-            return False
-    
-    @staticmethod
-    def evalOperator(operand1,operand2,operator):
-        if(operator=='<'):
-            if(operand1<operand2):
-                return True
-            else:
-                return False
-        elif(operator=='<='):
-            if(operand1<=operand2):
-                return True
-            else:
-                return False
-        elif(operator=='>'):
-            if(operand1>operand2):
-                return True
-            else:
-                return False
-        elif(operator=='>='):
-            if(operand1>=operand2):
-                return True
-            else:
-                return False
-        elif(operator=='=='):
-            if(operand1==operand2):
-                return True
-            else:
-                return False
                 
 
 

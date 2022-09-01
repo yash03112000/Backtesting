@@ -43,5 +43,5 @@ class Orderbook:
         self.transactions = pd.concat([self.transactions,df])
         print(self.transactions)
         filePath = r"./Spreadsheats/result.xlsx"
-        # self.transactions.to_excel(filePath)
+        self.transactions.to_excel(filePath)
 
