@@ -7,6 +7,7 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 from Orderbook import *
 from Utils.ConditionChecker import ConditionChecker as cnd
+from Utils.HeikinAshi import HeikinAshi as ha
 
 
 class Screener:
@@ -31,6 +32,8 @@ class Screener:
                 print(i)
                 stock = i + '.NS'
                 self.df = pdr.get_data_yahoo(stock, start, now,interval=self.timeframe)
+                if(self.chart=="Heikin-Ashi"):
+                    self.df = ha.convert(self.df)
                 if(cnd.evaluate(self.df,self.entryConditions)):
                     df = pd.DataFrame({'Stocks':[stock]})
                     filePath = r"./Spreadsheats/result.xlsx"

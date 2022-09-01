@@ -39,7 +39,7 @@ class Orderbook:
         if self.tradetype == "Short":
             pl = -pl
         self.netPL+=pl 
-        df = pd.DataFrame({'Type':[self.tradetype],'EnterTime':[transaction.enterTime],'EnterPrice':[transaction.enterPrice],'ExitPrice':[price],'ExitTime':[time],'Volume':[self.volume],'P/L':[pl],'Net P/L':[self.netPL]})
+        df = pd.DataFrame({'Type':[self.tradetype],'EnterTime':[transaction.enterTime.tz_localize(None)],'EnterPrice':[transaction.enterPrice],'ExitPrice':[price],'ExitTime':[time.tz_localize(None)],'Volume':[self.volume],'P/L':[pl],'Net P/L':[self.netPL]})
         self.transactions = pd.concat([self.transactions,df])
         print(self.transactions)
         filePath = r"./Spreadsheats/result.xlsx"

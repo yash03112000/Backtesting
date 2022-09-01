@@ -7,6 +7,7 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 from Orderbook import *
 from Utils.ConditionChecker import ConditionChecker as cnd
+from Utils.HeikinAshi import HeikinAshi as ha
 
 class Strategy:
 
@@ -33,7 +34,8 @@ class Strategy:
         stock = self.instrument
         stock = stock + '.NS'
         self.df = pdr.get_data_yahoo(stock, start, now,interval=self.timeframe)
-        # print(self.df)
+        if(self.chart=="Heikin-Ashi"):
+            self.df = ha.convert(self.df)
         self.time = []
         self.dateTime = self.df.index.tolist()
         for i in self.dateTime:
