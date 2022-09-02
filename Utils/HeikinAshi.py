@@ -3,7 +3,7 @@ class HeikinAshi:
     @staticmethod
     def convert(df):
         newdf = df.copy()
-        print(df)
+        # print(df)
         dateTime = df.index.tolist()
 
         for i in range(0,len(df)):
@@ -14,6 +14,6 @@ class HeikinAshi:
                 newdf.at[dateTime[i],'Open'] = round((newdf['Open'][i-1]+df['Close'][i-1])/2,2)
             newdf.at[dateTime[i],'High'] = max(df['High'][i],newdf['Open'][i],newdf['Close'][i])
             newdf.at[dateTime[i],'Low'] = min(df['Low'][i],newdf['Open'][i],newdf['Close'][i])
-        print(newdf)
+        # print(newdf)
         
         return newdf

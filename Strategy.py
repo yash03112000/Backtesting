@@ -37,6 +37,7 @@ class Strategy:
         if(self.chart=="Heikin-Ashi"):
             self.df = ha.convert(self.df)
         self.time = []
+        # print(self.df)
         self.dateTime = self.df.index.tolist()
         for i in self.dateTime:
             timetemp =  i.strftime("%H:%M")
